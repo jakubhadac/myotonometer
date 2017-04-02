@@ -58,12 +58,11 @@ class Evidence extends Component{
     handlePatientNote(event){ this.setState({ note: event.target.value }); }
     /* user functions */
     btnSave(){
-        console.log(this.state.id);
         let p = this.createPatient(), i = this.getLastId();
-        if(this.state.id === 'new' && this.checkValues()) { console.log('s'); ws.patientAdd(i, p); }
-        else { console.log('e'); ws.patientEdit(this.state.id, p); }
+        if(this.state.id === 'new' && this.checkValues()) { ws.patientAdd(i, p); }
+        else { ws.patientEdit(this.state.id, p); }
     }
-    btnDelete(){ if (this.state.id !== 'new') ws.patientRemove(this.state.id); }
+    btnDelete(){ if (this.state.id !== 'new') this.resetState(); ws.patientRemove(this.state.id); }
     /* render */
     render(){
         const newP = (
@@ -136,7 +135,7 @@ class Evidence extends Component{
                     </FormGroup>
                     <Row>
                         <Col sm={9}>
-                            <ControlLabel>Errors: {this.props.errorP}{this.state.error}</ControlLabel>
+                            <ControlLabel>Status: {this.props.errorP}{this.state.error}</ControlLabel>
                         </Col>
                         <Col sm={3}>
                             <Button className="pull-right" onClick={this.btnSave}>Save</Button>
@@ -215,7 +214,7 @@ class Evidence extends Component{
                     </FormGroup>
                     <Row>
                         <Col sm={9}>
-                            <ControlLabel>Errors: {this.props.errorP}{this.state.error}</ControlLabel>
+                            <ControlLabel>Status: {this.props.errorP}{this.state.error}</ControlLabel>
                         </Col>
                         <Col sm={3}>
                             <Button className="pull-right" onClick={this.btnSave}>Save</Button>

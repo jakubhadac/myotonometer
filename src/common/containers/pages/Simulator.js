@@ -17,7 +17,7 @@ class Simulator extends React.Component {
         const noProgress = (
             <fieldset>
                 <legend>Myotonometer simulator</legend>
-                <p>Status: {statusText[this.props.status]}</p>
+                <p>Status: {statusText[this.props.status]}({this.props.status})</p>
                 <p>Move: nope</p>
                 <p>Chart data: <small>Data obtained only one who started measurements</small></p>
                 <button onClick={this.createMeas} disabled={(this.props.status !== 0)? true: false}>Create meas</button>
@@ -26,7 +26,7 @@ class Simulator extends React.Component {
         const withProgress = (
             <fieldset>
                 <legend>Myotonometer simulator</legend>
-                <p>Status: {statusText[this.props.status]}</p>
+                <p>Status: {statusText[this.props.status]}({this.props.status})</p>
                 <p>Move: TOP <progress value={this.props.progress} max="10" /> BOTTOM </p>
 
             </fieldset>

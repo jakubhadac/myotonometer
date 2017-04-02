@@ -88,14 +88,16 @@ export function patientAdd(patientId, patientData){
     patientData.measurements = {};
     let patient = {[patientId]: patientData};
     ws.wsclient.add('/data/patients', patient, (response, error) => {
-        if(error.status === 0){ store.dispatch( addPatient( patient ) ); }
+        let p = patientData; p.id = patientId;
+        if(error.status === 0){ store.dispatch( addPatient( p ) ); }
         else { store.dispatch( patientError( error.message ) ); }
     });
 }
 export function patientEdit(patientId, patientData){
     //patientData.measurements = {};
     ws.wsclient.modify('/data/patients/', {[patientId]:patientData}, (response, error) => {
-        if(error.status === 0){ store.dispatch( editPatient( {[patientId]: patientData} ) ); }
+        let p = patientData; p.id = patientId;
+        if(error.status === 0){ store.dispatch( editPatient( p ) ); }
         else { store.dispatch( patientError( error.message ) ); }
     });
 }

@@ -26,14 +26,14 @@ export const loadPatient = (ps) => {
  * @returns {{type: string, id: *}}
  */
 export const removePatient = (id) => {
-    return {type: 'EDIT_PATIENT', id: id};
+    return {type: 'REMOVE_PATIENT', id: id};
 };
 /**
  * @param p Object of patient {key; {patient data}}
  * @returns {{type: string, newPatient: *}}
  */
 export const addPatient = (p) => {
-    return {type: 'ADD_PATIENT', newPatient: p};
+    return {type: 'ADD_PATIENT', patient: p};
 };
 /**
  * @param msg (string) Error msg from server or add/edit/remove from page
