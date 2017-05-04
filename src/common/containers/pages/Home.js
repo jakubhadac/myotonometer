@@ -8,9 +8,10 @@ export default class Home extends Component{
             <Well>
                 <h1>Info:</h1>
                 <ul>
-                    <li>React + react-bootstrap ... OK</li>
-                    <li>add/remove/edit patient ... OK</li>
-                    <li>Ready for: add/remove/edit measurement</li>
+                    <li>Zařízení je ve vývoji, mohou se vyskytovat problémy s funkčností. Pokud k něčemu takovému dojde
+                        opakovaně, poznamenejte si, prosím, jak se chyba projevila a co jí předcházelo,
+                        aby bylo možné chybu odstranit. </li>
+                    <li>V případě problémů se zařízením použijte e-mail: myotonometer at gmail.com</li>
                     <li>SIM (<a target="_blank" href="http://mtrsim.herokuapp.com/">start btn</a>)</li>
                 </ul>
             </Well>
