@@ -1,60 +1,46 @@
 import React, {Component} from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
-import { Panel } from 'react-bootstrap';
-/*
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as webSocketActions from './../../actions/webSocket';
+/* maps functions */
+function mapStateToProps(store) { return { meas: store.measurement, sel: store.graph }; }
 
-function mapStateToProps(state) {
-    return {
-        chartData: state.chartData
-    };
-}
-function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators( webSocketActions, dispatch) };
-}
-*/
 class Chart extends Component{
+    //select unsaved graph
     //transfer data to format [] => [{}, ..., {}]; {} = {pos: , chart: }
-    dataTransfer(data){
-        if (data.length !== 0){
+    dataTransfer(){
+        let meas;
+        if (this.props.sel.type === 'unsaved') {
+            meas = this.props.meas.unsaved.filter( e=> (e.patId === this.props.sel.pid && e.date === this.props.sel.date) );
+        } else if (this.props.sel.type === 'saved'){
+            meas = this.props.meas.measurements.filter( e=> (e.patId === this.props.sel.pid && e.measId === this.props.sel.mid) );
+        } else { meas = []; }
+
+        if (meas.length !== 0){
             let chartData = [];
-            for (let index=0; index<data.length; index++){
-                chartData[index] = {pos: index, chart: data[index]};
+            for (let index=0; index<meas[0].data.length; index++){
+                chartData[index] = {pos: index, chart: meas[0].data[index]};
             }
             return chartData;
         } else { return []; }
     }
     render(){
-        const chartData = this.dataTransfer(this.props.datain);
+        const chartData = this.dataTransfer();
         const yes = (
-            <Panel header="Chart" collapsible defaultExpanded>
-                <ResponsiveContainer height={450} widht="95%">
-                    <LineChart data={chartData} margin={{top: 20, right: 80, bottom: 20, left: 20}}>
-                        <XAxis dataKey="pos" label="Pages" />
-                        <YAxis label="Pages" />
-                        <CartesianGrid strokeDasharray="6 6"/>
-                        <Line type="monotone" dataKey="chart" stroke="#8884d8" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </Panel>
+            <ResponsiveContainer height={450} widht="95%">
+                <LineChart data={chartData} margin={{top: 20, right: 80, bottom: 20, left: 20}}>
+                    <XAxis dataKey="pos" label="Samples" />
+                    <YAxis label="P [kPa]" />
+                    <CartesianGrid strokeDasharray="8 8"/>
+                    <Line type="monotone" dataKey="chart" stroke="#8884d8" />
+                </LineChart>
+            </ResponsiveContainer>
         );
         const no = (
-            <Panel header="Chart" collapsible defaultExpanded>
-                <ResponsiveContainer height={450} widht="95%">
-                    <LineChart data={chartData} margin={{top: 20, right: 80, bottom: 20, left: 20}}>
-                        <XAxis dataKey="pos" label="Pages" />
-                        <YAxis label="Pages" />
-                        <CartesianGrid strokeDasharray="6 6"/>
-                        <Line type="monotone" dataKey="chart" stroke="#8884d8" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </Panel>
+            <div>
+                No data ...
+            </div>
         );
         const render = (chartData.length !== 0)? yes : no;
         return ( render );
     }
-}
-export default Chart;
-//export default connect(mapStateToProps, mapDispatchToProps)(Chart);
+} export default connect(mapStateToProps)(Chart);

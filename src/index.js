@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-/* import pages */
+//import { syncHistoryWithStore } from 'react-router-redux';
+/* import pages  containters*/
 import App from './common/containers/App'
 import Home from './common/containers/pages/Home';
 import Measurement from './common/containers/pages/Measurement';
@@ -14,14 +15,19 @@ import Comparison from './common/containers/pages/Comparison';
 import Simul from './common/containers/pages/Simulator';
 import Settings from './common/containers/pages/Settings';
 import NoF from './common/containers/pages/NoFound';
+import G from './common/containers/pages/Graph';
 /* create global State store */
-import myotonometrApp from './common/reducers/index';
-let store = createStore(myotonometrApp);
+import myotonometerApp from './common/reducers/index';
+let store = createStore(myotonometerApp);
 /* open ws connection */
 import * as ws from './common/services/index';
 ws.createWs( false, "marble.cz", 8080, store);
-ws.patientLoad();
+ws.patientsLoad();
+ws.get();
+ws.measurementLoad();
 
+//synchronized history with store
+//const history = syncHistoryWithStore(browserHistory, store);
 //render location in testAppB/public/index.html or testAppB/build/index.html
 const root = document.getElementById('root');
 
@@ -37,6 +43,7 @@ ReactDOM.render((
                 <Route path="/settings" component={Settings} />
                 <Route path="/sim" component={Simul} />
                 <Route path="/comparison" component={Comparison} />
+                <Route path="/g" component={G} />
             </Route>
             <Route path="*" component={App} >
                 <IndexRoute component={NoF} />

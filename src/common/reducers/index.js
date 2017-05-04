@@ -1,10 +1,14 @@
 /* import libs */
 import { combineReducers } from 'redux';
+//import { routerReducer } from 'react-router-redux';
 /* import reducers */
-import simulator from './simulator';
+import myotonometer from './myotonometer';
+import measurement from './measurement';
 import patient from './patient';
+import settings from './settings';
+import graph from './graph';
 
-const myotonometrApp = combineReducers({
-    simulator, patient
+const myotonometerApp = combineReducers({
+    myotonometer, patient, settings, measurement, graph
 });
-export default myotonometrApp;
+export default myotonometerApp;

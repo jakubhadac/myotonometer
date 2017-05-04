@@ -1,38 +1,36 @@
 /* import libs */
 import React, { Component } from 'react';
-import {FormGroup, FormControl, Button, InputGroup} from 'react-bootstrap';
+import { Col, Row, FormControl, FormGroup, ControlLabel, Form } from 'react-bootstrap';
+import { connect } from 'react-redux';
+/* import actions */
+import { changeLanguage } from '../actions/index';
+/* map functions */
+function mapStateToProps(store) { return { language: store.settings.language }; }
+function mapDispatchToProps(dispatch){ return { changeLang: (lang)=>{ dispatch(changeLanguage(lang)) } } }
 
-import Lang from '../data/languageData';
-
-export default class languageSwitcher extends Component{
+class LanguageSwitcher extends Component{
     constructor(props){
         super(props);
-
-        this.changeLang = this.changeLang.bind(this);
-        this.changeDefaultLang = this.changeDefaultLang.bind(this);
+        this.changeL = this.changeL.bind(this);
     }
-    changeLang(e){
-        let lang = e.target.value;
-        Lang.language = lang;
-        this.props.changeLanguage( lang );
-    }
-    changeDefaultLang() {
-        Lang.language = 'en';
-        this.props.changeLanguage( 'en' );
-    }
+    changeL(e){ this.props.changeLang(e.target.value); }
     render(){
         return (
-            <FormGroup controlId="languageControl">
-                <InputGroup>
-                    <FormControl componentClass="select" value={Lang.language} onChange={this.changeLang}>
-                        <option value="cz">Czech</option>
-                        <option value="en">English</option>
-                    </FormControl>
-                    <InputGroup.Button>
-                        <Button onClick={this.changeDefaultLang}>Set to default</Button>
-                    </InputGroup.Button>
-                </InputGroup>
-            </FormGroup>
+            <Row>
+                <Col sm={6}>
+                    <Form horizontal>
+                        <FormGroup controlId="formHorizontalLang">
+                            <Col componentClass={ControlLabel} sm={6}> Language: </Col>
+                            <Col sm={6}>
+                                <FormControl componentClass="select" value={this.props.language} onChange={this.changeL}>
+                                    <option value="cz">Czech</option>
+                                    <option value="en">English</option>
+                                </FormControl>
+                            </Col>
+                        </FormGroup>
+                    </Form>
+                </Col>
+            </Row>
         );
     }
-}
+} export default connect(mapStateToProps, mapDispatchToProps)(LanguageSwitcher);

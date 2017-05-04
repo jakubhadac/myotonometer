@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {Col, Row, Well, FormControl, Checkbox, Button, ControlLabel} from 'react-bootstrap';
 /* import components */
+import Lang from '../../components/languageSwitcher';
 
 
 class Settings extends Component{
@@ -10,19 +11,11 @@ class Settings extends Component{
             <Well>
                 <fieldset>
                     <legend>Web interface</legend>
-                    <Row>
-                        <Col componentClass={ControlLabel} sm={2}>Language: </Col>
-                        <Col sm={10}>
-                            <FormControl componentClass="select">
-                                <option value='cz'>Czech</option>
-                                <option value='en'>English</option>
-                            </FormControl>
-                        </Col>
-                    </Row>
+                    <Lang />
                 </fieldset>
                 <fieldset>
                     <legend>Measurement Parameters</legend>
-                    Defaults:
+                    <h3> Defaults </h3>
                     <Row>
                         <Col componentClass={ControlLabel} sm={3}>Speed (1 - 10 mm/s): </Col>
                         <Col sm={7}>
